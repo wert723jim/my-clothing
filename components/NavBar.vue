@@ -71,120 +71,122 @@
         </div>
       </div>
       <!-- 購物車 -->
-      <div class="cart-list hidden absolute top-0 right-0 bg-white w-[330px] overflow-y-auto h-screen">
-        <div class="px-5 py-2">
-          <!-- 標題 -->
-          <div class="flex items-center justify-between h-[57px]">
-            <span class="text-4xl font-semibold">您的購物車</span>
-            <label for="cart-input">
-              <span class="icon-x " />
-            </label>
-          </div>
-          <!-- 商品 -->
-          <div>
-            <div class="cart_prods flex flex-col">
-              <div class="cart_prod border-t pt-5 mb-5">
-                <div class="prod_intro flex">
-                  <div class="prod_img flex">
-                    <!-- 商品頁面 -->
-                    <a href="" class="h-[70px] w-[70px]">
-                      <img src="https://cdn.store-assets.com/s/274811/i/58509706.jpeg" alt="" class="h-full mx-auto">
-                    </a>
+      <div class="cart-list hidden absolute top-0 right-0 bg-white w-[330px]  h-screen">
+        <div class="h-screen overflow-y-auto relative">
+          <div class="px-5 py-2">
+            <!-- 標題 -->
+            <div class="flex items-center justify-between h-[57px]">
+              <span class="text-4xl font-semibold">您的購物車</span>
+              <label for="cart-input">
+                <span class="icon-x " />
+              </label>
+            </div>
+            <!-- 商品 -->
+            <div>
+              <div class="cart_prods flex flex-col">
+                <div class="cart_prod border-t pt-5 mb-5">
+                  <div class="prod_intro flex">
+                    <div class="prod_img flex">
+                      <!-- 商品頁面 -->
+                      <a href="" class="h-[70px] w-[70px]">
+                        <img src="https://cdn.store-assets.com/s/274811/i/58509706.jpeg" alt="" class="h-full mx-auto">
+                      </a>
+                    </div>
+                    <!-- 包含刪除鈕，可以從 cart 中移除 -->
+                    <div class="prod_info flex flex-col mb-3">
+                      <span class="prod_info_title">
+                        PIN SKTBS 23SS輕薄防曬衣服冰絲涼感外套 兩色
+                      </span>
+                      <span class="prod_info_style">
+                        灰色, S
+                      </span>
+                      <span class="prod_info_price">
+                        NT$ 1980
+                      </span>
+                      <button class="text-left">
+                        刪除
+                      </button>
+                    </div>
                   </div>
-                  <!-- 包含刪除鈕，可以從 cart 中移除 -->
-                  <div class="prod_info flex flex-col mb-3">
-                    <span class="prod_info_title">
-                      PIN SKTBS 23SS輕薄防曬衣服冰絲涼感外套 兩色
-                    </span>
-                    <span class="prod_info_style">
-                      灰色, S
-                    </span>
-                    <span class="prod_info_price">
-                      NT$ 1980
-                    </span>
-                    <button class="text-left">
-                      刪除
-                    </button>
-                  </div>
-                </div>
-                <div class="prod_count flex justify-between">
-                  <div class="prod_qty flex">
-                    <a href="" class="border border-r-0 w-6 text-center">-</a>
-                    <input type="number" value="1" min="0" class="text-center border w-12">
-                    <a href="" class="border border-l-0 w-6 text-center">+</a>
-                  </div>
-                  <div class="prod_total_price">
-                    NT$ 1,980
-                  </div>
-                </div>
-              </div>
-              <div class="cart_prod border-t pt-5 mb-5">
-                <div class="prod_intro flex">
-                  <div class="prod_img flex">
-                    <!-- 商品頁面 -->
-                    <a href="" class="h-[70px] w-[70px]">
-                      <img src="https://cdn.store-assets.com/s/274811/i/58509706.jpeg" alt="" class="h-full mx-auto">
-                    </a>
-                  </div>
-                  <!-- 包含刪除鈕，可以從 cart 中移除 -->
-                  <div class="prod_info flex flex-col mb-3">
-                    <span class="prod_info_title">
-                      PIN SKTBS 23SS輕薄防曬衣服冰絲涼感外套 兩色
-                    </span>
-                    <span class="prod_info_style">
-                      灰色, S
-                    </span>
-                    <span class="prod_info_price">
-                      NT$ 1980
-                    </span>
-                    <button class="text-left">
-                      刪除
-                    </button>
+                  <div class="prod_count flex justify-between">
+                    <div class="prod_qty flex">
+                      <a href="" class="border border-r-0 w-6 text-center">-</a>
+                      <input type="number" value="1" min="0" class="text-center border w-12">
+                      <a href="" class="border border-l-0 w-6 text-center">+</a>
+                    </div>
+                    <div class="prod_total_price">
+                      NT$ 1,980
+                    </div>
                   </div>
                 </div>
-                <div class="prod_count flex justify-between">
-                  <div class="prod_qty flex">
-                    <a href="" class="border border-r-0 w-6 text-center">-</a>
-                    <input type="number" value="1" min="0" class="text-center border w-12">
-                    <a href="" class="border border-l-0 w-6 text-center">+</a>
+                <div class="cart_prod border-t pt-5 mb-5">
+                  <div class="prod_intro flex">
+                    <div class="prod_img flex">
+                      <!-- 商品頁面 -->
+                      <a href="" class="h-[70px] w-[70px]">
+                        <img src="https://cdn.store-assets.com/s/274811/i/58509706.jpeg" alt="" class="h-full mx-auto">
+                      </a>
+                    </div>
+                    <!-- 包含刪除鈕，可以從 cart 中移除 -->
+                    <div class="prod_info flex flex-col mb-3">
+                      <span class="prod_info_title">
+                        PIN SKTBS 23SS輕薄防曬衣服冰絲涼感外套 兩色
+                      </span>
+                      <span class="prod_info_style">
+                        灰色, S
+                      </span>
+                      <span class="prod_info_price">
+                        NT$ 1980
+                      </span>
+                      <button class="text-left">
+                        刪除
+                      </button>
+                    </div>
                   </div>
-                  <div class="prod_total_price">
-                    NT$ 1,980
+                  <div class="prod_count flex justify-between">
+                    <div class="prod_qty flex">
+                      <a href="" class="border border-r-0 w-6 text-center">-</a>
+                      <input type="number" value="1" min="0" class="text-center border w-12">
+                      <a href="" class="border border-l-0 w-6 text-center">+</a>
+                    </div>
+                    <div class="prod_total_price">
+                      NT$ 1,980
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="cart_prod border-t pt-5 mb-5">
-                <div class="prod_intro flex">
-                  <div class="prod_img flex">
-                    <!-- 商品頁面 -->
-                    <a href="" class="h-[70px] w-[70px]">
-                      <img src="https://cdn.store-assets.com/s/274811/i/58509706.jpeg" alt="" class="h-full mx-auto">
-                    </a>
+                <div class="cart_prod border-t pt-5 mb-5">
+                  <div class="prod_intro flex">
+                    <div class="prod_img flex">
+                      <!-- 商品頁面 -->
+                      <a href="" class="h-[70px] w-[70px]">
+                        <img src="https://cdn.store-assets.com/s/274811/i/58509706.jpeg" alt="" class="h-full mx-auto">
+                      </a>
+                    </div>
+                    <!-- 包含刪除鈕，可以從 cart 中移除 -->
+                    <div class="prod_info flex flex-col mb-3">
+                      <span class="prod_info_title">
+                        PIN SKTBS 23SS輕薄防曬衣服冰絲涼感外套 兩色
+                      </span>
+                      <span class="prod_info_style">
+                        灰色, S
+                      </span>
+                      <span class="prod_info_price">
+                        NT$ 1980
+                      </span>
+                      <button class="text-left">
+                        刪除
+                      </button>
+                    </div>
                   </div>
-                  <!-- 包含刪除鈕，可以從 cart 中移除 -->
-                  <div class="prod_info flex flex-col mb-3">
-                    <span class="prod_info_title">
-                      PIN SKTBS 23SS輕薄防曬衣服冰絲涼感外套 兩色
-                    </span>
-                    <span class="prod_info_style">
-                      灰色, S
-                    </span>
-                    <span class="prod_info_price">
-                      NT$ 1980
-                    </span>
-                    <button class="text-left">
-                      刪除
-                    </button>
-                  </div>
-                </div>
-                <div class="prod_count flex justify-between">
-                  <div class="prod_qty flex">
-                    <a href="" class="border border-r-0 w-6 text-center">-</a>
-                    <input type="number" value="1" min="0" class="text-center border w-12">
-                    <a href="" class="border border-l-0 w-6 text-center">+</a>
-                  </div>
-                  <div class="prod_total_price">
-                    NT$ 1,980
+                  <div class="prod_count flex justify-between">
+                    <div class="prod_qty flex">
+                      <a href="" class="border border-r-0 w-6 text-center">-</a>
+                      <input type="number" value="1" min="0" class="text-center border w-12">
+                      <a href="" class="border border-l-0 w-6 text-center">+</a>
+                    </div>
+                    <div class="prod_total_price">
+                      NT$ 1,980
+                    </div>
                   </div>
                 </div>
               </div>
@@ -192,7 +194,7 @@
           </div>
         </div>
         <!-- 結帳 -->
-        <div class="sticky bottom-0  cart_checkout w-full text-white">
+        <div class="sticky bottom-0 cart_checkout w-full text-white">
           <button class="w-full h-14 bg-black">
             結帳
           </button>
