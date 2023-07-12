@@ -1,9 +1,7 @@
 <template>
   <div>
     <NuxtLayout>
-      <div class="h-screen bg-black">
-        123
-      </div>
+      <NuxtPage />
     </NuxtLayout>
   </div>
 </template>
