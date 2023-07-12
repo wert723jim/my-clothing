@@ -16,7 +16,8 @@ module.exports = {
         '**/pages/**/*.{js,ts,vue}',
         '**/layouts/**/*.{js,ts,vue}',
         '**/app.{js,ts,vue}',
-        '**/error.{js,ts,vue}'
+        '**/error.{js,ts,vue}',
+        '**/components/**/*.{js,ts,vue}'
       ],
       rules: {
         'vue/multi-word-component-names': 'off'

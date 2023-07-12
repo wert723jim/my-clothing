@@ -127,9 +127,15 @@
     <div class="join h-[500px]">
       <div class="flex justify-center items-center w-full h-full bg-cover bg-center bg-no-repeat" style="background-image:url('https://cdn.store-assets.com/s/274811/f/4816708.jpeg?width=1500&format=webp');">
         <div class="text-center text-white">
-          <p class="mb-3">立即加入我們</p>
-          <p class="mb-3">享受優質的購物體驗</p>
-          <button class="bg-black px-8 py-2.5">登入</button>
+          <p class="mb-3">
+            立即加入我們
+          </p>
+          <p class="mb-3">
+            享受優質的購物體驗
+          </p>
+          <button class="bg-black px-8 py-2.5">
+            登入
+          </button>
         </div>
       </div>
     </div>
