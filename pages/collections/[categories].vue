@@ -7,6 +7,20 @@
       <p class="my-8 text-3xl text-gray-600">
         匹配到的 Top Number: <span class="text-5xl font-semibold text-rose-500">{{ categories }}</span>
       </p>
+      <div v-for="product in products" :key="product.id" class="p-10">
+        <div>
+          商品名稱 : {{ product.title }}
+        </div>
+        <div>
+          商品價格 : {{ product.price }}
+        </div>
+        <div>
+          商品介紹 : {{ product.description }}
+        </div>
+        <div>
+          商品圖片 : <img :src="product.image" alt="">
+        </div>
+      </div>
     </div>
   </div>
 </template>
