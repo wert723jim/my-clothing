@@ -2,7 +2,9 @@
   <header class="sticky top-0 bg-[#ebebeb]">
     <div class="flex items-center justify-between px-5 py-2 max-w-screen-2xl mx-auto">
       <div class="lg:w-24 h-full w-36">
-        <img src="https://cdn.store-assets.com/s/274811/f/4267870.png?width=350&format=webp" alt="" class="h-full">
+        <NuxtLink to="/">
+          <img src="https://cdn.store-assets.com/s/274811/f/4267870.png?width=350&format=webp" alt="" class="h-full">
+        </NuxtLink>
       </div>
       <input id="hbg-input" type="checkbox" class="hidden">
       <input id="cart-input" type="checkbox" class="hidden">
@@ -15,9 +17,9 @@
           </label>
         </div>
         <div class="p-5 border-b">
-          <a href="#">
+          <NuxtLink to="/">
             首頁
-          </a>
+          </NuxtLink>
         </div>
         <div class="p-5 border-b">
           <a href="">
