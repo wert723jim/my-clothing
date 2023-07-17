@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="container mx-auto px-4 py-8 md:p-8">
+    <div class="max-w-[1400px] mx-auto px-4 py-8 md:p-8">
       <main>
         <!-- grid -->
         <div class="grid grid-rows-3 lg:grid-rows-2 lg:grid-cols-12">
           <!-- Bread Crumbs -->
           <div class="bread_crumbs lg:row-start-1 lg:row-end-2 lg:col-span-full">
             <span>
-              <a href="/">首頁</a>
+              <NuxtLink to="/">首頁</NuxtLink>
             </span>
             >
             <span>所有商品</span>
@@ -63,58 +63,25 @@
             </div>
           </div>
           <!-- prod_list -->
-          <div class="list_prods grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8 lg:row-start-3 lg:row-end-5 lg:col-start-4 lg:col-end-13">
-            <div class="prod h-full">
-              <div class="prod_img">
-                <img src="https://cdn.store-assets.com/s/274811/i/59927725.jpeg?width=480&format=webp" alt="" class="object-cover">
-              </div>
-              <div class="prod_info p-3 text-center">
-                <div class="prod_info_name text-sm">
-                  ADAM 無葉掛脖風扇 三色
+          <div class="list_prods grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8 lg:row-start-3 lg:col-start-4 lg:col-end-13">
+            <div
+              v-for="prod in products"
+              :key="prod.id"
+              class="prod"
+            >
+              <NuxtLink :to="{ path:`/products/${ prod.title }`}" class="flex flex-col h-full">
+                <div class="prod_img grow p-3">
+                  <img :src="prod.image" alt="" class="h-full w-full object-contain inline">
                 </div>
-                <div class="prod_info_price text-sm font-semibold">
-                  NT$ 890
+                <div class="prod_info p-3 text-center">
+                  <p class="prod_info_name text-sm">
+                    {{ prod.title }}
+                  </p>
+                  <p class="prod_info_price text-sm font-semibold">
+                    NT$ {{ prod.price }}
+                  </p>
                 </div>
-              </div>
-            </div>
-            <div class="prod h-full">
-              <div class="prod_img">
-                <img src="https://cdn.store-assets.com/s/274811/i/59764434.jpeg?width=480&format=webp" alt="" class="object-cover">
-              </div>
-              <div class="prod_info p-3 text-center">
-                <div class="prod_info_name text-sm break-words">
-                  WODEN X Azurer 2023 Spring & Summer Azurer INCENSE CHAMBER 藍色
-                </div>
-                <div class="prod_info_price text-sm font-semibold">
-                  NT$ 3,380
-                </div>
-              </div>
-            </div>
-            <div class="prod h-full">
-              <div class="prod_img">
-                <img src="https://cdn.store-assets.com/s/274811/i/59927725.jpeg?width=480&format=webp" alt="" class="object-cover">
-              </div>
-              <div class="prod_info p-3 text-center">
-                <div class="prod_info_name text-sm">
-                  ADAM 無葉掛脖風扇 三色
-                </div>
-                <div class="prod_info_price text-sm font-semibold">
-                  NT$ 890
-                </div>
-              </div>
-            </div>
-            <div class="prod h-full">
-              <div class="prod_img">
-                <img src="https://cdn.store-assets.com/s/274811/i/59764434.jpeg?width=480&format=webp" alt="" class="object-cover">
-              </div>
-              <div class="prod_info p-3 text-center">
-                <div class="prod_info_name text-sm">
-                  WODEN X Azurer 2023 Spring & Summer Azurer INCENSE CHAMBER 藍色
-                </div>
-                <div class="prod_info_price text-sm font-semibold">
-                  NT$ 3,380
-                </div>
-              </div>
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -124,23 +91,26 @@
 </template>
 
 <script setup>
-const route = useRoute()
-const fullPath = route.fullPath
-const params = fullPath.substring(1).split('/')
-const crumbs = []
+const { data } = await useAsyncData(() => $fetch('https://fakestoreapi.com/products'))
 
-let path = ''
+const products = data
+// const route = useRoute()
+// const fullPath = route.fullPath
+// const params = fullPath.substring(1).split('/')
+// const crumbs = []
 
-params.forEach((param) => {
-  path = `${path}/${param}`
-  const match = fullPath.match(path)
+// let path = ''
 
-  if (match !== null) {
-    crumbs.push(path)
-  }
-})
+// params.forEach((param) => {
+//   path = `${path}/${param}`
+//   const match = fullPath.match(path)
 
-console.log(crumbs)
+//   if (match !== null) {
+//     crumbs.push(path)
+//   }
+// })
+
+// console.log(crumbs)
 // const crumbs = computed(() => {
 //   const fullPath = route.fullPath
 //   const params = fullPath.substring(1).split('/')
@@ -156,7 +126,7 @@ console.log(crumbs)
 // })
 </script>
 
-<style>
+<style scoped>
 .prod {
   box-shadow: 0 3px 20px rgba(0,0,0,0.1)
 }
