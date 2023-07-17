@@ -143,7 +143,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .brand a::before {
   content: '';
   position: absolute;
