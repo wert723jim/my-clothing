@@ -2,7 +2,7 @@
   <div>
     <div class="max-w-[1400px] mx-auto px-4 md:p-8">
       <main>
-        <div>
+        <div v-if="product">
           <!-- Bread Crumbs -->
           <div class="hidden bread_crumbs lg:block lg:row-start-1 lg:row-end-2 lg:col-span-full">
             <span class="mr-2">
@@ -12,7 +12,7 @@
               ›
             </span>
             <span class="mr-2">
-              {{ name }}
+              {{ product.name }}
             </span>
           </div>
           <!-- prod -->
@@ -21,23 +21,8 @@
               <img src="https://cdn.store-assets.com/s/274811/i/59927725.jpeg?width=1024&format=webp" alt="" class="max-h-[60vh] mx-auto">
               <div class="prod_img_list">
                 <ul class="flex flex-wrap">
-                  <li class="w-1/5 p-4">
-                    <img src="https://cdn.store-assets.com/s/274811/i/59927725.jpeg?width=1024&format=webp" alt="" class="max-h-12 w-auto">
-                  </li>
-                  <li class="w-1/5 p-4">
-                    <img src="https://cdn.store-assets.com/s/274811/i/59927641.jpeg?width=1024&format=webp" alt="" class="max-h-12 w-auto">
-                  </li>
-                  <li class="w-1/5 p-4">
-                    <img src="https://cdn.store-assets.com/s/274811/i/59927642.jpeg?width=1024&format=webp" alt="" class="max-h-12 w-auto">
-                  </li>
-                  <li class="w-1/5 p-4">
-                    <img src="https://cdn.store-assets.com/s/274811/i/59927647.jpeg?width=1024&format=webp" alt="" class="max-h-12 w-auto">
-                  </li>
-                  <li class="w-1/5 p-4">
-                    <img src="https://cdn.store-assets.com/s/274811/i/59927647.jpeg?width=1024&format=webp" alt="" class="max-h-12 w-auto">
-                  </li>
-                  <li class="w-1/5 p-4">
-                    <img src="https://cdn.store-assets.com/s/274811/i/59927647.jpeg?width=1024&format=webp" alt="" class="max-h-12 w-auto">
+                  <li v-for="img in product.images" :key="img.id" class="w-1/5 p-4">
+                    <img :src="img.url" alt="" class="max-h-12 w-auto">
                   </li>
                 </ul>
               </div>
@@ -45,14 +30,14 @@
             <div class="prod_info">
               <form id="addToCartForm" action="" @submit.prevent.stop="handleSubmit">
                 <h1 class="text-3xl font-medium">
-                  {{ name }}
+                  {{ product.name }}
                 </h1>
                 <!-- 商品名稱 -->
-                <input type="text" :value="name" name="prodName" class="hidden">
+                <input type="text" :value="product.name" name="prodName" class="hidden">
                 <div class="prod_price">
                   <!-- 商品價格 -->
-                  <input type="number" value="890" name="prodPrice" class="hidden">
-                  <span class="text-xl font-bold">NT$ 890</span>
+                  <input type="number" :value="product.price" name="prodPrice" class="hidden">
+                  <span class="text-xl font-bold">NT$ {{ product.price }}</span>
                 </div>
                 <div class="flex text-sm">
                   <!-- 商品顏色 -->
@@ -96,8 +81,13 @@
 
 <script setup>
 const route = useRoute()
-const { name } = route.params
+const { id } = route.params
 const prodQty = ref(1)
+console.log(id)
+
+const { data: product } = await useFetch(`http://127.0.0.1:8000/api/products/${id}`)
+
+// console.log(product)
 
 const addQty = () => {
   prodQty.value++

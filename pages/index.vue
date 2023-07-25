@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- carousel -->
-    <div class="home_carousel w-screen h-screen">
+    <div class="home_carousel w-screen h-[90vh]">
       <img src="https://cdn.store-assets.com/s/274811/f/11148959.jpg?width=1500&format=webp" alt="" class="w-full h-full">
     </div>
     <main class="my-14 mx-6">

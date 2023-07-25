@@ -28,4 +28,7 @@
 <script setup>
 const route = useRoute()
 const { categories } = route.params
+
+const { data: products } = useFetch(`http://127.0.0.1:8000/api/products/${categories}`)
+console.log(products)
 </script>
