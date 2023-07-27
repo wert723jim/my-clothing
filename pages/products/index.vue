@@ -105,15 +105,15 @@
 <script setup>
 const route = useRoute()
 const category = ref(route.query.category)
-console.log(category.value)
 // fetch the products
 const { data: products, refresh } = await useFetch(() => 'http://127.0.0.1:8000/api/products', {
-  query: { category }
+  query: { category },
+  initialCache: false
 })
 
 onBeforeRouteUpdate((to) => {
   category.value = to.query.category
-  console.log(category.value)
+  // refetch
   refresh()
 })
 // 沒有 next

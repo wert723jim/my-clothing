@@ -18,7 +18,7 @@
           <!-- prod -->
           <div class="prod lg:flex">
             <div class="prod_img lg:grow">
-              <img src="https://cdn.store-assets.com/s/274811/i/59927725.jpeg?width=1024&format=webp" alt="" class="max-h-[60vh] mx-auto">
+              <img :src="product.images[0].url" alt="" class="max-h-[60vh] mx-auto">
               <div class="prod_img_list">
                 <ul class="flex flex-wrap">
                   <li v-for="img in product.images" :key="img.id" class="w-1/5 p-4">
@@ -33,7 +33,7 @@
                   {{ product.name }}
                 </h1>
                 <!-- 商品名稱 -->
-                <input type="text" :value="product.name" name="prodName" class="hidden">
+                <input type="text" :value="product.id" name="prodId" class="hidden">
                 <div class="prod_price">
                   <!-- 商品價格 -->
                   <input type="number" :value="product.price" name="prodPrice" class="hidden">
@@ -43,12 +43,31 @@
                   <!-- 商品顏色 -->
                   <label for="" class="w-[23%] ">顏色</label>
                   <div class="style flex">
-                    <input id="color1" type="radio" name="prodColor" value="color1" checked>
-                    <label for="color1">黑色</label>
-                    <input id="color2" type="radio" name="prodColor" value="color2">
-                    <label for="color2">沙色</label>
-                    <input id="color3" type="radio" name="prodColor" value="color3">
-                    <label for="color3">綠色</label>
+                    <div v-for="color in prodColor" :key="color">
+                      <input
+                        :id="color"
+                        v-model="colorPicked"
+                        type="radio"
+                        name="prodColor"
+                        :value="color"
+                        @change="colorRemainedSize"
+                      >
+                      <label :for="color">{{ color }}</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- 商品尺寸 -->
+                <div v-if="prodSize.length > 0" class="flex">
+                  <label for="" class="w-[23%]">尺寸</label>
+                  <div v-for="size in prodSize" :key="size">
+                    <input
+                      :id="size"
+                      v-model="sizePicked"
+                      type="radio"
+                      name="prodSize"
+                      :value="size"
+                    >
+                    <label :for="size">{{ size }}</label>
                   </div>
                 </div>
                 <div class="prod_qty flex">
@@ -83,17 +102,42 @@
 const route = useRoute()
 const { id } = route.params
 const prodQty = ref(1)
-console.log(id)
+const prodColor = reactive([])
+const prodSize = reactive([])
+const colorPicked = ref('')
+const sizePicked = ref('')
 
 const { data: product } = await useFetch(`http://127.0.0.1:8000/api/products/${id}`)
 
-// console.log(product)
+const prodInventories = product.value.inventories
+// 篩選出 inventories 中有什麼顏色
+prodInventories.forEach((prod) => {
+  if (!prodColor.includes(prod.color)) {
+    prodColor.push(prod.color)
+  }
+})
+// 當選好顏色後，找出該顏色有什麼size
+const colorRemainedSize = () => {
+  // 清除上一個顏色所篩選出剩餘的 size
+  prodSize.splice(0, prodSize.length)
+  // 清除上一個選擇顏色所選的 size
+  sizePicked.value = ''
+  prodInventories.forEach((prod) => {
+    if (prod.color === colorPicked.value) {
+      prodSize.push(prod.size)
+    }
+  })
+}
 
+// 不能小於 1
+// 要計算是否有超過 inventories 的 amount
+// 增加商品數量
 const addQty = () => {
   prodQty.value++
 }
-
+// 減少商品數量
 const reduceQty = () => {
+  if (prodQty.value === 1) { return }
   prodQty.value--
 }
 
