@@ -19,7 +19,7 @@
               登入電郵
             </div>
             <div class="login-form">
-              <form id="loginForm" action="" @submit.prevent.stop="emailLogin">
+              <form id="loginForm" action="" @submit.prevent="emailLogin">
                 <div class="mb-5">
                   <input
                     v-model="email"
@@ -32,7 +32,7 @@
                 <div class="mb-5">
                   <input
                     v-model="password"
-                    type="text"
+                    type="password"
                     name="password"
                     placeholder="密碼"
                     class="border border-inherit w-full py-2 px-5"
@@ -46,6 +46,11 @@
                   </div>
                   <div>
                     <a href="">忘記密碼 ?</a>
+                  </div>
+                  <div>
+                    <NuxtLink to="/account/register">
+                      註冊
+                    </NuxtLink>
                   </div>
                 </div>
               </form>
@@ -62,14 +67,25 @@ const email = ref('')
 const password = ref('')
 
 const emailLogin = async () => {
-  const { data: userData } = await useFetch('http://127.0.0.1:8000/api/login', {
+  // 取得 laravel csrf token 驗證
+  // const { data: csrfToken } = await useFetch('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+  //   server: false,
+  //   mode: 'cors',
+  //   credentials: 'include'
+  // })
+  // console.log(csrfToken)
+  const { data: userData, error } = await useFetch('http://127.0.0.1:8000/api/login', {
     method: 'POST',
-    body: toRaw({
-      email,
-      password
-    })
+    body: {
+      email: email.value,
+      password: password.value
+    }
   })
-
-  console.log('登入資料:', userData)
+  // 登入成功
+  if (userData.value) {
+    navigateTo('/account')
+  } else {
+    console.log(error.value?.data?.message ?? '未知錯誤')
+  }
 }
 </script>
