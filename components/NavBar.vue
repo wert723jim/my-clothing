@@ -32,9 +32,9 @@
           </a>
         </div>
         <div class="p-5 border-b">
-          <a href="">
+          <NuxtLink to="/products">
             款式分類
-          </a>
+          </NuxtLink>
         </div>
         <div class="p-5 border-b">
           <a href="">
@@ -56,17 +56,20 @@
             VIP會員
           </a>
         </div>
-        <div class="p-5 border-b">
-          <a href="">
+        <div class="p-5 border-b lg:hidden">
+          <NuxtLink v-if="userProfile">
+            登出
+          </NuxtLink>
+          <NuxtLink v-else to="/account/login">
             登入
-          </a>
+          </NuxtLink>
         </div>
-        <div class="p-5 border-b">
-          <a href="">
+        <div v-if="!userProfile" class="p-5 border-b lg:hidden">
+          <NuxtLink to="/account/register">
             註冊
-          </a>
+          </NuxtLink>
         </div>
-        <div class="p-5 border-b">
+        <div class="p-5 border-b lg:hidden">
           <a href="">
             搜尋
           </a>
@@ -202,14 +205,22 @@
           </button>
         </div>
       </div>
+      <!-- 工具列 -->
       <div>
         <div class="flex gap-x-3">
+          <!-- 搜尋 -->
           <div>
             <icon name="material-symbols:search-rounded" size="25" />
           </div>
+          <!-- 個人資料 -->
           <div class="hidden lg:block">
-            <icon name="material-symbols:person-2-outline-rounded" size="25" />
+            <ClientOnly>
+              <NuxtLink :to="{path: `/account/${userProfile}`}">
+                <icon name="material-symbols:person-2-outline-rounded" size="25" />
+              </NuxtLink>
+            </ClientOnly>
           </div>
+          <!-- 購物車 -->
           <div>
             <label for="cart-input">
               <icon name="ph:handbag-bold" size="25px" />
@@ -225,6 +236,12 @@
     </div>
   </header>
 </template>
+
+<script setup>
+import { useUserStore } from '@/stores/user'
+const userStore = useUserStore()
+const userProfile = computed(() => userStore.profile.user?.id ?? 'login')
+</script>
 
 <style>
 .icon-x {

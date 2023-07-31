@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', {
       })
 
       if (data.value) {
-        this.profile = {
+        this.profile.user = {
           ...data.value
         }
       } else {
@@ -53,6 +53,18 @@ export const useUserStore = defineStore('user', {
         data,
         error
       }
+    },
+    async logoutUser () {
+      const jwtToken = localStorage.getItem('token')
+      await useFetch('http://127.0.0.1:8000/api/logout', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      })
+      // 清空 pinia、localStorage 資料(client 端)
+      this.profile.user = {}
+      localStorage.removeItem('token')
     }
   }
 })

@@ -106,6 +106,7 @@
 const route = useRoute()
 const category = ref(route.query.category)
 // fetch the products
+// laravel App.key 沒有的話會阻擋 fetch 資料
 const { data: products, refresh } = await useFetch(() => 'http://127.0.0.1:8000/api/products', {
   query: { category },
   initialCache: false
