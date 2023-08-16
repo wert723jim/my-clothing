@@ -26,6 +26,7 @@ export const useUserStore = defineStore('user', {
         this.profile.user = {
           ...data.value
         }
+        this.profile.token = localStorage.getItem('token')
       } else {
         localStorage.removeItem('token')
       }
@@ -36,8 +37,12 @@ export const useUserStore = defineStore('user', {
       }
     },
     async emailLogin (loginData) {
-      const { data, error } = await useFetch('http://127.0.0.1:8000/api/login', {
+      await useFetch('http://localhost:8000/sanctum/csrf-cookie', { credentials: 'include' })
+      const token = useCookie('XSRF-TOKEN')
+      const { data, error } = await useFetch('http://localhost:8000/login', {
         method: 'POST',
+        credentials: 'include',
+        headers: { Accept: 'application/json', 'X-XSRF-TOKEN': token },
         body: loginData
       })
 

@@ -66,32 +66,32 @@
 </template>
 
 <script setup>
-// import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user'
 
-// const userStore = useUserStore()
+const userStore = useUserStore()
 const loginData = reactive({
   email: '',
   password: ''
 })
-const handleEmailLogin = async () => {
-  await useFetch('http://localhost:8000/sanctum/csrf-cookie', { credentials: 'include' })
-  const token = useCookie('XSRF-TOKEN')
-  const { data } = await useFetch('http://localhost:8000/login', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { Accept: 'application/json', 'X-XSRF-TOKEN': token },
-    body: { email: loginData.email, password: loginData.password }
-  })
-
-  console.log(data)
-}
 // const handleEmailLogin = async () => {
-//   const { data, error } = await userStore.emailLogin(toRaw(loginData))
-//   // 登入成功
-//   if (data.value) {
-//     navigateTo('/')
-//   } else {
-//     console.log(error.value?.data?.message ?? '未知錯誤')
-//   }
+//   await useFetch('http://localhost:8000/sanctum/csrf-cookie', { credentials: 'include' })
+//   const token = useCookie('XSRF-TOKEN')
+//   const { data } = await useFetch('http://localhost:8000/login', {
+//     method: 'POST',
+//     credentials: 'include',
+//     headers: { Accept: 'application/json', 'X-XSRF-TOKEN': token },
+//     body: { email: loginData.email, password: loginData.password }
+//   })
+
+//   console.log(data)
 // }
+const handleEmailLogin = async () => {
+  const { data, error } = await userStore.emailLogin(toRaw(loginData))
+  // 登入成功
+  if (data.value) {
+    navigateTo('/')
+  } else {
+    console.log(error.value?.data?.message ?? '未知錯誤')
+  }
+}
 </script>

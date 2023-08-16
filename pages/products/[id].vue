@@ -41,11 +41,10 @@
                 </div>
                 <div class="flex text-sm">
                   <!-- 商品顏色 -->
-                  <label for="" class="w-[23%] ">顏色</label>
+                  <!-- <label for="" class="w-[23%] ">顏色</label>
                   <div class="style flex">
                     <div v-for="color in prodColor" :key="color">
                       <input
-                        :id="color"
                         v-model="colorPicked"
                         type="radio"
                         name="prodColor"
@@ -54,10 +53,10 @@
                       >
                       <label :for="color">{{ color }}</label>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
                 <!-- 商品尺寸 -->
-                <div v-if="prodSize.length > 0" class="flex">
+                <!-- <div v-if="prodSize.length > 0" class="flex">
                   <label for="" class="w-[23%]">尺寸</label>
                   <div v-for="size in prodSize" :key="size">
                     <input
@@ -68,6 +67,16 @@
                       :value="size"
                     >
                     <label :for="size">{{ size }}</label>
+                  </div>
+                </div> -->
+                <div>
+                  <div v-for="inventory in product.inventories" :key="inventory.id">
+                    <input type="radio" name="inventory" v-model="chosen" :value="inventory.id">
+                    {{ inventory.id }}
+                    {{ inventory.color }}
+                    {{ inventory.size }}
+                    <span>數量</span>
+                    {{ inventory.quantity }}
                   </div>
                 </div>
                 <div class="prod_qty flex">
@@ -102,32 +111,33 @@
 const route = useRoute()
 const { id } = route.params
 const prodQty = ref(1)
-const prodColor = reactive([])
-const prodSize = reactive([])
-const colorPicked = ref('')
-const sizePicked = ref('')
+const chosen = ref(null)
+// const prodColor = reactive([])
+// const prodSize = reactive([])
+// const colorPicked = ref('')
+// const sizePicked = ref('')
 
 const { data: product } = await useFetch(`http://127.0.0.1:8000/api/products/${id}`)
 
-const prodInventories = product.value.inventories
+// const prodInventories = product.value?.inventories
 // 篩選出 inventories 中有什麼顏色
-prodInventories.forEach((prod) => {
-  if (!prodColor.includes(prod.color)) {
-    prodColor.push(prod.color)
-  }
-})
-// 當選好顏色後，找出該顏色有什麼size
-const colorRemainedSize = () => {
-  // 清除上一個顏色所篩選出剩餘的 size
-  prodSize.splice(0, prodSize.length)
-  // 清除上一個選擇顏色所選的 size
-  sizePicked.value = ''
-  prodInventories.forEach((prod) => {
-    if (prod.color === colorPicked.value) {
-      prodSize.push(prod.size)
-    }
-  })
-}
+// prodInventories.forEach((prod) => {
+//   if (!prodColor.includes(prod.color)) {
+//     prodColor.push(prod.color)
+//   }
+// })
+// // 當選好顏色後，找出該顏色有什麼size
+// const colorRemainedSize = () => {
+//   // 清除上一個顏色所篩選出剩餘的 size
+//   prodSize.splice(0, prodSize.length)
+//   // 清除上一個選擇顏色所選的 size
+//   sizePicked.value = ''
+//   prodInventories.forEach((prod) => {
+//     if (prod.color === colorPicked.value) {
+//       prodSize.push(prod.size)
+//     }
+//   })
+// }
 
 // 不能小於 1
 // 要計算是否有超過 inventories 的 amount
