@@ -32,7 +32,7 @@
                 <h1 class="text-3xl font-medium">
                   {{ product.name }}
                 </h1>
-                <!-- 商品名稱 -->
+                <!-- 商品id -->
                 <input type="text" :value="product.id" name="prodId" class="hidden">
                 <div class="prod_price">
                   <!-- 商品價格 -->

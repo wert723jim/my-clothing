@@ -21,9 +21,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
       if (data.value && to.name === 'account-id' && to.params.id !== userStore.profile.user.id.toString()) {
         return navigateTo(`/account/${userStore.profile.user.id}`)
       }
+
+      return
     }
     // 若沒有 jwtToken => 沒有登入，要進入會員資料頁，被轉址到登入頁
-    if (to.name === 'account-id' && to.params.id) {
+    if (to.name === 'account-id' && !to.params.id) {
       return navigateTo('/account/login')
     }
   }

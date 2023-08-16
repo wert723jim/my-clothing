@@ -71,8 +71,12 @@ const register = reactive({
 })
 
 const handleRegisterSubmit = async () => {
-  const { error } = await useFetch('http://127.0.0.1:8000/api/register', {
+  await useFetch('http://localhost:8000/sanctum/csrf-cookie', { credentials: 'include' })
+  const token = useCookie('XSRF-TOKEN')
+  const { error } = await useFetch('http://localhost:8000/register', {
     method: 'POST',
+    credentials: 'include',
+    headers: { Accept: 'application/json', 'X-XSRF-TOKEN': token },
     // 如果直接用 toRaw(register) ，每當 reactive、ref、computed 改變就會直接 fetch
     body: {
       name: register.name,
