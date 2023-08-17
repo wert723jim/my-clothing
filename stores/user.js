@@ -61,7 +61,7 @@ export const useUserStore = defineStore('user', {
     },
     async logoutUser () {
       const jwtToken = localStorage.getItem('token')
-      await useFetch('http://127.0.0.1:8000/api/logout', {
+      await useFetch('http://localhost:8000/logout', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${jwtToken}`

@@ -71,7 +71,7 @@
                 </div> -->
                 <div>
                   <div v-for="inventory in product.inventories" :key="inventory.id">
-                    <input type="radio" name="inventory" v-model="chosen" :value="inventory.id">
+                    <input v-model="chosen" type="radio" name="inventory" :value="inventory.id">
                     {{ inventory.id }}
                     {{ inventory.color }}
                     {{ inventory.size }}
@@ -93,7 +93,7 @@
                     </a>
                   </div>
                   <div>
-                    <button type="submit">
+                    <button type="submit" @click="handleClick">
                       加入購物車
                     </button>
                   </div>
@@ -108,6 +108,8 @@
 </template>
 
 <script setup>
+import { useCartStore } from '@/stores/cart'
+const cartStore = useCartStore()
 const route = useRoute()
 const { id } = route.params
 const prodQty = ref(1)
@@ -151,11 +153,28 @@ const reduceQty = () => {
   prodQty.value--
 }
 
-const handleSubmit = (e) => {
-  const form = e.target
-  const formData = new FormData(form)
-  for (const [name, value] of formData.entries()) {
-    console.log(name + ': ' + value)
+const handleSubmit = async () => {
+  // const form = e.target
+  // const formData = new FormData(form)
+  // for (const [name, value] of formData.entries()) {
+  //   console.log(name + ': ' + value)
+  // }
+  // 是否有勾選顏色、尺寸
+  if (!chosen.value) {
+    console.log('請勾選顏色尺寸')
+    return
   }
+  const cartLocal = JSON.parse(localStorage.getItem('cart')) || []
+  // localStorage 是否有 cart item ?
+  cartLocal.push(chosen.value)
+  localStorage.setItem('cart', JSON.stringify(cartLocal))
+  const { error } = await cartStore.refreshCart(cartLocal)
+  if (error.value) {
+    console.log('錯誤')
+  }
+}
+
+const handleClick = () => {
+  cartStore.toggleCart()
 }
 </script>
