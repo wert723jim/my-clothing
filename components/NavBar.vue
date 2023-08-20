@@ -76,67 +76,69 @@
         </div>
       </div>
       <!-- 購物車 -->
-      <div class="cart-list hidden absolute top-0 right-0 bg-white w-[330px]  h-screen">
-        <div class="h-screen overflow-y-auto relative">
-          <div class="px-5 py-2">
-            <!-- 標題 -->
-            <div class="flex items-center justify-between h-[57px]">
-              <span class="text-4xl font-semibold">您的購物車</span>
-              <label for="cart-input">
-                <span class="icon-x " />
-              </label>
-            </div>
-            <!-- 商品 -->
-            <div>
-              <div class="cart_prods flex flex-col">
-                <!-- 單一商品 -->
-                <div v-for="cartItem in cartStore.cart.cartItems" :key="cartItem.id" class="cart_prod border-t pt-5 mb-5">
-                  <div class="prod_intro flex">
-                    <div class="prod_img flex">
-                      <!-- 商品頁面 -->
-                      <a href="" class="h-[70px] w-[70px]">
-                        <img :src="cartItem.image" alt="" class="h-full mx-auto">
-                      </a>
+      <ClientOnly>
+        <div class="cart-list hidden absolute top-0 right-0 bg-white w-[330px]  h-screen">
+          <div class="h-screen overflow-y-auto relative">
+            <div class="px-5 py-2">
+              <!-- 標題 -->
+              <div class="flex items-center justify-between h-[57px]">
+                <span class="text-4xl font-semibold">您的購物車</span>
+                <label for="cart-input">
+                  <span class="icon-x " />
+                </label>
+              </div>
+              <!-- 商品 -->
+              <div>
+                <div class="cart_prods flex flex-col">
+                  <!-- 單一商品 -->
+                  <div v-for="cartItem in cartStore.cart.cartItems" :key="cartItem.id" class="cart_prod border-t pt-5 mb-5">
+                    <div class="prod_intro flex">
+                      <div class="prod_img flex">
+                        <!-- 商品頁面 -->
+                        <a href="" class="h-[70px] w-[70px]">
+                          <img :src="cartItem.image" alt="" class="h-full mx-auto">
+                        </a>
+                      </div>
+                      <!-- 包含刪除鈕，可以從 cart 中移除 -->
+                      <div class="prod_info flex flex-col mb-3">
+                        <span class="prod_info_title">
+                          {{ cartItem.name }}
+                        </span>
+                        <span class="prod_info_style">
+                          {{ cartItem.color }}, {{ cartItem.size }}
+                        </span>
+                        <span class="prod_info_price">
+                          NT$ {{ cartItem.price }}
+                        </span>
+                        <button class="text-left" @click.prevent="removeCartItem(cartItem.id)">
+                          刪除
+                        </button>
+                      </div>
                     </div>
-                    <!-- 包含刪除鈕，可以從 cart 中移除 -->
-                    <div class="prod_info flex flex-col mb-3">
-                      <span class="prod_info_title">
-                        {{ cartItem.name }}
-                      </span>
-                      <span class="prod_info_style">
-                        {{ cartItem.color }}, {{ cartItem.size }}
-                      </span>
-                      <span class="prod_info_price">
-                        NT$ {{ cartItem.price }}
-                      </span>
-                      <button class="text-left">
-                        刪除
-                      </button>
-                    </div>
-                  </div>
-                  <!-- 總金額 -->
-                  <div class="prod_count flex justify-between">
-                    <div class="prod_qty flex">
-                      <a href="" class="border border-r-0 w-6 text-center">-</a>
-                      <input value="1" type="number" min="0" class="text-center border w-12">
-                      <a href="" class="border border-l-0 w-6 text-center">+</a>
-                    </div>
-                    <div class="prod_total_price">
-                      NT$ 1,980
+                    <!-- 總金額 -->
+                    <div class="prod_count flex justify-between">
+                      <div class="prod_qty flex">
+                        <a href="" class="border border-r-0 w-6 text-center" @click.prevent="reduceCartItemQuantity(cartItem)">-</a>
+                        <input v-model="cartItem.product_quantity" type="number" min="0" class="text-center border w-12">
+                        <a href="" class="border border-l-0 w-6 text-center" @click.prevent="addCartItemQuantity(cartItem)">+</a>
+                      </div>
+                      <div class="prod_total_price">
+                        NT$ {{ cartItem.product_quantity * cartItem.price }}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- 結帳 -->
+          <div class="sticky bottom-0 cart_checkout w-full text-white">
+            <button class="w-full h-14 bg-black">
+              結帳
+            </button>
+          </div>
         </div>
-        <!-- 結帳 -->
-        <div class="sticky bottom-0 cart_checkout w-full text-white">
-          <button class="w-full h-14 bg-black">
-            結帳
-          </button>
-        </div>
-      </div>
+      </ClientOnly>
       <!-- 工具列 -->
       <div>
         <div class="flex gap-x-3">
@@ -175,7 +177,40 @@ import { useCartStore } from '@/stores/cart'
 const userStore = useUserStore()
 const cartStore = useCartStore()
 const userProfile = computed(() => userStore.profile.user?.id ?? 'login')
-console.log(cartStore.cart.cartItems)
+const addCartItemQuantity = (cartItem) => {
+  cartItem.product_quantity++
+  let cartLocal = JSON.parse(localStorage.getItem('cart'))
+  cartLocal = cartLocal.map((item) => {
+    if (item.inventory_id === cartItem.id) {
+      return {
+        ...item,
+        product_quantity: cartItem.product_quantity
+      }
+    }
+    return item
+  })
+  localStorage.setItem('cart', JSON.stringify(cartLocal))
+}
+const reduceCartItemQuantity = (cartItem) => {
+  cartItem.product_quantity--
+  let cartLocal = JSON.parse(localStorage.getItem('cart'))
+  cartLocal = cartLocal.map((item) => {
+    if (item.inventory_id === cartItem.id) {
+      return {
+        ...item,
+        product_quantity: cartItem.product_quantity
+      }
+    }
+    return item
+  })
+  localStorage.setItem('cart', JSON.stringify(cartLocal))
+}
+const removeCartItem = (id) => {
+  let cartLocal = JSON.parse(localStorage.getItem('cart'))
+  cartLocal = cartLocal.filter(item => item.inventory_id !== id)
+  cartStore.removeCartItem(id)
+  localStorage.setItem('cart', JSON.stringify(cartLocal))
+}
 </script>
 
 <style>

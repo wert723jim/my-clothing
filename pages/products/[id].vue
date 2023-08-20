@@ -114,10 +114,6 @@ const route = useRoute()
 const { id } = route.params
 const prodQty = ref(1)
 const chosen = ref(null)
-// const prodColor = reactive([])
-// const prodSize = reactive([])
-// const colorPicked = ref('')
-// const sizePicked = ref('')
 
 const { data: product } = await useFetch(`http://127.0.0.1:8000/api/products/${id}`)
 
@@ -153,7 +149,7 @@ const reduceQty = () => {
   prodQty.value--
 }
 
-const handleSubmit = async () => {
+const handleSubmit = () => {
   // const form = e.target
   // const formData = new FormData(form)
   // for (const [name, value] of formData.entries()) {
@@ -162,19 +158,13 @@ const handleSubmit = async () => {
   // 是否有勾選顏色、尺寸
   if (!chosen.value) {
     console.log('請勾選顏色尺寸')
-    return
-  }
-  const cartLocal = JSON.parse(localStorage.getItem('cart')) || []
-  // localStorage 是否有 cart item ?
-  cartLocal.push(chosen.value)
-  localStorage.setItem('cart', JSON.stringify(cartLocal))
-  const { error } = await cartStore.refreshCart(cartLocal)
-  if (error.value) {
-    console.log('錯誤')
+    // return
   }
 }
 
-const handleClick = () => {
+const handleClick = async () => {
+  await cartStore.addItemToLocalCart(chosen.value, prodQty.value)
   cartStore.toggleCart()
+  cartStore.getCartItemsInfo()
 }
 </script>

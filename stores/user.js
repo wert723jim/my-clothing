@@ -60,11 +60,15 @@ export const useUserStore = defineStore('user', {
       }
     },
     async logoutUser () {
+      await useFetch('http://localhost:8000/sanctum/csrf-cookie', { credentials: 'include' })
+      const token = useCookie('XSRF-TOKEN')
       const jwtToken = localStorage.getItem('token')
       await useFetch('http://localhost:8000/logout', {
         method: 'POST',
+        credentials: 'include',
         headers: {
-          Authorization: `Bearer ${jwtToken}`
+          Authorization: `Bearer ${jwtToken}`,
+          'X-XSRF-TOKEN': token
         }
       })
       // 清空 pinia、localStorage 資料(client 端)
