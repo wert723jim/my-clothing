@@ -83,6 +83,7 @@
               <!-- 標題 -->
               <div class="flex items-center justify-between h-[57px]">
                 <span class="text-4xl font-semibold">您的購物車</span>
+                <a href="" @click.prevent.stop="clearCartItems">清除</a>
                 <label for="cart-input">
                   <span class="icon-x " />
                 </label>
@@ -180,6 +181,7 @@ const userProfile = computed(() => userStore.profile.user?.id ?? 'login')
 const addCartItemQuantity = (cartItem) => {
   cartItem.product_quantity++
   let cartLocal = JSON.parse(localStorage.getItem('cart'))
+  // localStorage
   cartLocal = cartLocal.map((item) => {
     if (item.inventory_id === cartItem.id) {
       return {
@@ -206,10 +208,11 @@ const reduceCartItemQuantity = (cartItem) => {
   localStorage.setItem('cart', JSON.stringify(cartLocal))
 }
 const removeCartItem = (id) => {
-  let cartLocal = JSON.parse(localStorage.getItem('cart'))
-  cartLocal = cartLocal.filter(item => item.inventory_id !== id)
+  // pinia cart
   cartStore.removeCartItem(id)
-  localStorage.setItem('cart', JSON.stringify(cartLocal))
+}
+const clearCartItems = () => {
+  cartStore.clearCartItems()
 }
 </script>
 

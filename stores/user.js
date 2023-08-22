@@ -8,9 +8,11 @@ export const useUserStore = defineStore('user', {
         name: null,
         email: null,
         phone: null,
-        address: null
+        address: null,
+        carts: []
       },
-      token: null
+      token: null,
+      isAuthenticated: false
     }
   }),
   actions: {
@@ -50,7 +52,6 @@ export const useUserStore = defineStore('user', {
         this.profile = {
           ...data.value
         }
-
         localStorage.setItem('token', this.profile.token)
       }
 
@@ -73,6 +74,8 @@ export const useUserStore = defineStore('user', {
       })
       // 清空 pinia、localStorage 資料(client 端)
       this.profile.user = {}
+      this.profile.isAuthenticated = false
+      this.profile.token = null
       localStorage.removeItem('token')
     }
   }

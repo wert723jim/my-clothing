@@ -67,8 +67,10 @@
 
 <script setup>
 import { useUserStore } from '@/stores/user'
+import { useCartStore } from '@/stores/cart'
 
 const userStore = useUserStore()
+const cartStore = useCartStore()
 const loginData = reactive({
   email: '',
   password: ''
@@ -89,6 +91,8 @@ const handleEmailLogin = async () => {
   const { data, error } = await userStore.emailLogin(toRaw(loginData))
   // 登入成功
   if (data.value) {
+    // 第一次登入時，合併線上購物車以及未登入前本地購物車
+    await cartStore.getOnlineCart()
     navigateTo('/')
   } else {
     console.log(error.value?.data?.message ?? '未知錯誤')

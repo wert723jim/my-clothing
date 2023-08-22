@@ -6,6 +6,7 @@
     <button @click="handleClick">click</button>
     <button class="block" @click="fetchClientCart">fetchClientCart</button>
     <button class="block" @click="addNewOnlineCart">addNewOnlineCart</button>
+    <button class="block" @click="clearOnlineCart">clearOnlineCart</button>
   </div>
 </template>
 
@@ -39,11 +40,20 @@ const addNewOnlineCart = async () => {
   const { error } = await useFetch('http://localhost:8000/api/carts', {
     method: 'POST',
     credentials: 'include',
-
     headers: {
       Authorization: `Bearer ${token}`
     },
     body: cartLocal
+  })
+  console.log('error:', error)
+}
+const clearOnlineCart = async () => {
+  const token = localStorage.getItem('token')
+  const { error } = await useFetch('http://localhost:8000/api/carts', {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   })
   console.log('error:', error)
 }
